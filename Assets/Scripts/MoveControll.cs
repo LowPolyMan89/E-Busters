@@ -11,10 +11,11 @@ public class MoveControll : MonoBehaviour
     [SerializeField] private float depth;
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private Vector3 _cameraOffset;
-
+    [SerializeField] private DataProvider _dataProvider;
 
     private void Start()
     {
+        _dataProvider = DataProvider.Instance;
         _playerBody = _player.GetComponent<Rigidbody>();
         _cameraTransform = Camera.main.transform;
     }
@@ -24,6 +25,14 @@ public class MoveControll : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F))
         {
             _flashLight.SetActive(!_flashLight.activeSelf);
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            _dataProvider.CurrentWeapon.Reload(_dataProvider.CurrentWeapon.ReloadTime);
+        }
+        if(Input.GetMouseButton(0))
+        {
+            _dataProvider.CurrentWeapon.Shoot();
         }
 
         Vector3 MouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, depth));
