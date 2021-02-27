@@ -46,7 +46,7 @@ public class Weapon : MonoBehaviour
         {
             ammoCount = 0;
         }
-
+        _DataProvider.Events.NoizeChangeEvent(_DataProvider.CurrentWeapon.weaponData.NoizePerShoot, _DataProvider.CurrentWeapon.weaponData.NoizePerShoot);
         _DataProvider.Events.UiUpdate();
 
     }

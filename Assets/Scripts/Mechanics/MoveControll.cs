@@ -12,7 +12,7 @@ public class MoveControll : MonoBehaviour
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private Vector3 _cameraOffset;
     [SerializeField] private DataProvider _dataProvider;
-
+    [SerializeField] private LayerMask layerMask;
     private void Start()
     {
         _dataProvider = DataProvider.Instance;
@@ -35,8 +35,18 @@ public class MoveControll : MonoBehaviour
             _dataProvider.CurrentWeapon.Shoot();
         }
 
-        Vector3 MouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, depth));
-        _player.transform.LookAt(MouseWorldPosition);
+
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, 100f, layerMask))
+        {
+            if(hit.transform.tag == "Floor")
+            {
+                _player.transform.LookAt(hit.point);
+            }        
+        }
+
         _player.transform.rotation = Quaternion.Euler(new Vector3(0, _player.transform.rotation.eulerAngles.y, 0));
 
         _cameraTransform.position = new Vector3(_player.transform.position.x + _cameraOffset.x, _cameraOffset.y, _player.transform.position.z + _cameraOffset.z);

@@ -9,6 +9,7 @@ public class DataProvider : MonoBehaviour
 
     public Weapon CurrentWeapon;
     public EventSystem Events;
+    public MapData CurrentMapData;
 
     private void Awake()
     {

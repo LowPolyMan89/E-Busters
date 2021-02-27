@@ -15,5 +15,6 @@ public class WeaponData : ScriptableObject
     public float FireRate;
     public float Angle;
     public float Range;
+    public float NoizePerShoot;
    // public Vector3 DamageProportion;
 }
