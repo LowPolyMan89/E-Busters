@@ -94,6 +94,7 @@ MonoBehaviour:
   TriggerType: 0
   door: {fileID: 4756936054296311344}
   triggerCollider: {fileID: 0}
+  isActive: 1
 --- !u!65 &5676050600747387961
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -174,10 +175,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3164826657521655250, guid: 01660b2623c248d4da57b54f760ead1b,
+        type: 3}
+      propertyPath: m_Name
+      value: Door_part_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3164826657521655250, guid: 01660b2623c248d4da57b54f760ead1b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3204520382671857385, guid: 01660b2623c248d4da57b54f760ead1b,
         type: 3}
       propertyPath: m_Name
       value: Door_big_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200701599261162492, guid: 01660b2623c248d4da57b54f760ead1b,
+        type: 3}
+      propertyPath: m_Name
+      value: Door_part_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200701599261162492, guid: 01660b2623c248d4da57b54f760ead1b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6695331140935566290, guid: 01660b2623c248d4da57b54f760ead1b,
         type: 3}
@@ -189,7 +210,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3370999866469778282, guid: 01660b2623c248d4da57b54f760ead1b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 01660b2623c248d4da57b54f760ead1b, type: 3}
 --- !u!1 &4756936054296311344 stripped
 GameObject:

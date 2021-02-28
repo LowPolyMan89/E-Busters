@@ -21,6 +21,6 @@ MonoBehaviour:
   AmmoStorage: 24
   AmmoInShoot: 1
   FireRate: 0.1
-  Angle: 5
+  Angle: 1
   Range: 20
   NoizePerShoot: 10

@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 2824723316119960659}
   - component: {fileID: 1197031121802032118}
   - component: {fileID: 3997017509689034556}
-  - component: {fileID: 3370999866469778282}
   m_Layer: 0
   m_Name: Door_big_1
   m_TagString: Untagged
@@ -161,20 +160,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3370999866469778282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3204520382671857385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb70b85c0ef52d04ab33156c1d4e55d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActionType: 0
-  door: {fileID: 0}
 --- !u!1 &5200701599261162492
 GameObject:
   m_ObjectHideFlags: 0

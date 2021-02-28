@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float ammoCount;
     [SerializeField] private float ammoStorage;
     [SerializeField] private VfxStarter vfxStarter;
+    [SerializeField] private WeaponStage weaponStage;
     public ParticleSystem BulletVfx;
     public bool isReload = false;
 
@@ -27,7 +28,8 @@ public class Weapon : MonoBehaviour
         ammoCount = weaponData.AmmoCount;
         ammoStorage = weaponData.AmmoStorage;
 
-        _DataProvider.CurrentWeapon = this;   
+        if(weaponStage == WeaponStage.Player)
+            _DataProvider.CurrentWeapon = this;   
         
     }
 
@@ -46,7 +48,12 @@ public class Weapon : MonoBehaviour
         {
             ammoCount = 0;
         }
-        _DataProvider.Events.NoizeChangeEvent(_DataProvider.CurrentWeapon.weaponData.NoizePerShoot, _DataProvider.CurrentWeapon.weaponData.NoizePerShoot);
+        else
+        {
+            if (weaponStage == WeaponStage.Player)
+                _DataProvider.Events.NoizeChangeEvent(_DataProvider.CurrentWeapon.weaponData.NoizePerShoot, _DataProvider.CurrentWeapon.weaponData.NoizePerShoot);
+        }
+       
         _DataProvider.Events.UiUpdate();
 
     }
@@ -99,4 +106,9 @@ public class Weapon : MonoBehaviour
     }
 
 
+}
+
+public enum WeaponStage
+{
+    Enemy, Player
 }

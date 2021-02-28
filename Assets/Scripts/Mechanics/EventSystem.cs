@@ -10,6 +10,19 @@ public class EventSystem : MonoBehaviour
     public event Action OnUiUpdate;
     public event Action OnBulletCountChange;
     public event Func<float, float> OnMapNoizeChange;
+    public event Func<EnemySpawner, EnemySpawner> OnSpawnEnemyEvent;
+
+
+    public EnemySpawner SpawnEnemy(EnemySpawner outValu, EnemySpawner spawner)
+    {
+        if (OnSpawnEnemyEvent != null)
+        {
+            print("Event: SpawnEnemy = " + spawner.SpawnEnemyID);
+            OnSpawnEnemyEvent(spawner);
+        }
+
+        return spawner;
+    }
 
     public ObjectAction DoorOpenEvent(ObjectAction inValue, ObjectAction outValue)
     {
@@ -33,9 +46,12 @@ public class EventSystem : MonoBehaviour
 
     public float NoizeChangeEvent(float inValue, float outValue)
     {
+
         if (OnBulletHitEvent != null)
         {
             OnMapNoizeChange(outValue);
+            print("Event: NoizeChangeEvent = " + outValue);
+            UiUpdate();
         }
 
         return outValue;

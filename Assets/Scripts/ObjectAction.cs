@@ -29,7 +29,7 @@ public class ObjectAction : MonoBehaviour
         {
             return;
         }
-
+        
         if(other.tag == "Player")
         {
             Action();
@@ -54,6 +54,7 @@ public class ObjectAction : MonoBehaviour
         {
             case ActionTypes.DoorOpen:
                 Animator anim = door.GetComponent<Animator>();
+                print("Door open: " + this.GetInstanceID());
                 anim.SetBool("Open", !anim.GetBool("Open"));
                 DataProvider.Instance.Events.DoorOpenEvent(this, this);
                 break;
