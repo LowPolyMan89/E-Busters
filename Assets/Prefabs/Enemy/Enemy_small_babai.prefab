@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 880428905173025141}
   - component: {fileID: 6006857914238948690}
   - component: {fileID: 8430655047589779455}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy_small_babai
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

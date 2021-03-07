@@ -6,21 +6,19 @@ public class ObjectAction : MonoBehaviour
 {
     public ActionTypes ActionType;
     public ActionTriggerType TriggerType;
-    [SerializeField] private GameObject door;
     [SerializeField] private Collider triggerCollider;
     [SerializeField] private bool isActive;
 
+    public bool IsActive { get => isActive; }
 
     private void Start()
     {
-        switch (ActionType)
-        {
-            case ActionTypes.DoorOpen:
-                DataProvider.Instance.Events.OnDoorOpenEvent += OpenDoor;
-                break;
-            default:
-                break;
-        }
+
+    }
+
+    public virtual void SetActive(bool value)
+    {
+        isActive = value;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,7 +28,7 @@ public class ObjectAction : MonoBehaviour
             return;
         }
         
-        if(other.tag == "Player")
+        if(other.tag == "Player" || other.tag == "Enemy")
         {
             Action();
         }
@@ -42,29 +40,16 @@ public class ObjectAction : MonoBehaviour
             return;
         }
 
-        if (other.tag == "Player")
+        if (other.tag == "Player" || other.tag == "Enemy")
         {
             Action();
         }
     }
 
-    public void Action()
+    public virtual void Action()
     {
-        switch (ActionType)
-        {
-            case ActionTypes.DoorOpen:
-                Animator anim = door.GetComponent<Animator>();
-                print("Door open: " + this.GetInstanceID());
-                anim.SetBool("Open", !anim.GetBool("Open"));
-                DataProvider.Instance.Events.DoorOpenEvent(this, this);
-                break;
-            default:
-                break;
-        }
+
     }
 
-    public ObjectAction OpenDoor(ObjectAction action)
-    {
-        return this;
-    }
+
 }

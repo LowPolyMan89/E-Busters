@@ -10,15 +10,18 @@ public class DataProvider : MonoBehaviour
     public Weapon CurrentWeapon;
     public EventSystem Events;
     public MapData CurrentMapData;
+    public ItemsData ItemsData;
     public Player Player;
     public EnemyData EnemyData;
     public LevelConfig LevelConfig;
+    public Terminal ClosesTerminal;
+    public BattleUI BattleUI;
 
     private void Awake()
     {
         Player = GameObject.FindObjectOfType<Player>();
         EnemySpawners.AddRange(GameObject.FindObjectsOfType<EnemySpawner>());
-
+        BattleUI = GameObject.FindObjectOfType<BattleUI>();
         if (instance == null)
         {
             instance = this;

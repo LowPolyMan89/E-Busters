@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
   EnemyTriggerRadius: 50
+  LevelPower: 100
+  PowerPerSecond: 1
+  DangerStatusValue: 50

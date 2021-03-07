@@ -6,11 +6,15 @@ using UnityEngine;
 public class EventSystem : MonoBehaviour
 {
     public event Func<float, DamegableObject, DamegableObject> OnBulletHitEvent;
+    public event Func<DoorTerminal, DoorTerminal> OnDoorTerminalOpen;
     public event Func<ObjectAction, ObjectAction> OnDoorOpenEvent;
     public event Action OnUiUpdate;
     public event Action OnBulletCountChange;
     public event Func<float, float> OnMapNoizeChange;
+    public event Func<float, float> OnMapPowerChange;
     public event Func<EnemySpawner, EnemySpawner> OnSpawnEnemyEvent;
+    public event Action OnInteractiveAction;
+    public event Func<Item, Item> OnAddItemToSlot;
 
 
     public EnemySpawner SpawnEnemy(EnemySpawner outValu, EnemySpawner spawner)
@@ -22,6 +26,26 @@ public class EventSystem : MonoBehaviour
         }
 
         return spawner;
+    }
+
+    public Item AddItemToSlot(Item outValu, Item inValue)
+    {
+        if (OnAddItemToSlot != null)
+        {
+            OnAddItemToSlot(inValue);
+        }
+
+        return inValue;
+    }
+
+    public DoorTerminal DoorTerminalOpen(DoorTerminal outValu, DoorTerminal terminal)
+    {
+        if (OnDoorTerminalOpen != null)
+        {
+            OnDoorTerminalOpen(terminal);
+        }
+
+        return terminal;
     }
 
     public ObjectAction DoorOpenEvent(ObjectAction inValue, ObjectAction outValue)
@@ -57,6 +81,18 @@ public class EventSystem : MonoBehaviour
         return outValue;
     }
 
+    public float PowerChangeEvent(float inValue, float outValue)
+    {
+
+        if (OnMapPowerChange != null)
+        {
+            OnMapPowerChange(outValue);
+            UiUpdate();
+        }
+
+        return outValue;
+    }
+
     public void BulletCountChange() //call on bullet count change
     {
         if (OnBulletCountChange != null)
@@ -70,6 +106,14 @@ public class EventSystem : MonoBehaviour
         if (OnUiUpdate != null)
         {
             OnUiUpdate();
+        }
+    }
+
+    public void EnteractiveAction()
+    {
+        if (OnInteractiveAction != null)
+        {
+            OnInteractiveAction();
         }
     }
 

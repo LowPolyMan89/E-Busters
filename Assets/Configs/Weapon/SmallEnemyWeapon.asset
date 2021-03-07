@@ -22,5 +22,5 @@ MonoBehaviour:
   AmmoInShoot: 1
   FireRate: 1
   Angle: 3
-  Range: 20
+  Range: 1
   NoizePerShoot: 0

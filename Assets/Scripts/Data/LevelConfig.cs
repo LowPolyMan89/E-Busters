@@ -6,4 +6,7 @@ using UnityEngine;
 public class LevelConfig : ScriptableObject
 {
     public float EnemyTriggerRadius;
+    public float LevelPower;
+    public float PowerPerSecond;
+    public float DangerStatusValue;
 }

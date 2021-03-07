@@ -36,6 +36,10 @@ public class MoveControll : MonoBehaviour
         {
             _dataProvider.CurrentWeapon.Reload(_dataProvider.CurrentWeapon.ReloadTime);
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _dataProvider.Events.EnteractiveAction();
+        }
 
         if (Input.GetMouseButton(1))
         {
@@ -69,7 +73,10 @@ public class MoveControll : MonoBehaviour
         _player.transform.LookAt(point);
         playerTransform.localEulerAngles = new Vector3(0f, _player.transform.localRotation.eulerAngles.y, 0f);
 
+
+
         _cameraTransform.position = new Vector3(playerPosition.x + _cameraOffset.x, _cameraOffset.y, playerPosition.z + _cameraOffset.z);
+        
     }
 
 
