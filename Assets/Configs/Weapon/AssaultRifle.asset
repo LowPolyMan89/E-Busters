@@ -17,7 +17,7 @@ MonoBehaviour:
   DamageNormal: 20
   DamageMax: 30
   ReloadTime: 2
-  AmmoCount: 12
+  AmmoCount: 1000
   AmmoStorage: 24
   AmmoInShoot: 1
   FireRate: 0.1
