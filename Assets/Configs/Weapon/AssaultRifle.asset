@@ -17,10 +17,10 @@ MonoBehaviour:
   DamageNormal: 20
   DamageMax: 30
   ReloadTime: 2
-  AmmoCount: 1000
+  AmmoCount: 100
   AmmoStorage: 24
   AmmoInShoot: 1
   FireRate: 0.1
-  Angle: 5
+  Angle: 1
   Range: 20
   NoizePerShoot: 10

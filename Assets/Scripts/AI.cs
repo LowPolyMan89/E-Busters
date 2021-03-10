@@ -7,47 +7,64 @@ public class AI : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
     [SerializeField] private float _reactionRadius;
-    [SerializeField] private ParticleSystem particleSystem_piss;
     private NavMeshAgent agent;
+    [SerializeField] private LayerMask layerMask;
+    public EnemyDataObject enemyData;
+    [SerializeField] private float enemyMemoryTimer;
+    [SerializeField] private Weapon enemyWeaponRange;
+    [SerializeField] private Weapon enemyWeaponClose;
 
+    public float EnemyMemoryTimer { get => enemyMemoryTimer;}
+    public Weapon EnemyWeaponRange { get => enemyWeaponRange; }
+    public Weapon EnemyWeaponClose { get => enemyWeaponClose; }
+
+    public virtual void Attack()
+    {
+
+    }
 
     private void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
         _player = GameObject.FindGameObjectWithTag("Player");
-        particleSystem_piss.Stop();
     }
     
     private void Update()
     {
+        if(enemyMemoryTimer > 0 )
+        {
+            enemyMemoryTimer -= Time.deltaTime;
+        }
+        if(enemyMemoryTimer <= 0)
+        {
+            enemyMemoryTimer = 0;
+        }
+
         if(Vector3.Distance(transform.position, _player.transform.position) <= _reactionRadius)
         {
             RaycastHit hit;
             
-            if (Physics.Raycast(transform.position, _player.transform.position - transform.position, out hit, 200f))
+            if (Physics.Raycast(transform.position, _player.transform.position - transform.position, out hit, 50f, layerMask))
             {
                 if(hit.transform.tag == "Player")
                 {
-                    particleSystem_piss.Play();
+                    enemyMemoryTimer = enemyData.EnemyMemoryTimer;
+                    agent.isStopped = false;
+                    agent.SetDestination(_player.transform.position);
+                    Attack();
+
+                }
+                else if(enemyMemoryTimer > 0)
+                {
                     agent.SetDestination(_player.transform.position);
                 }
                 else
                 {
-                    particleSystem_piss.Stop();
+                    agent.isStopped = true;
                 }
-                     
 
             }
-            else
-            {
-                particleSystem_piss.Stop();
-            }
-
         
-        }
-        else
-        {
-            particleSystem_piss.Stop();
         }
          
     }

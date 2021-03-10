@@ -9713,6 +9713,7 @@ MonoBehaviour:
   ammoCount: 0
   ammoStorage: 0
   vfxStarter: {fileID: 7761168602509101457}
+  weaponStage: 1
   BulletVfx: {fileID: 7752517393641527823}
   isReload: 0
   weaponData: {fileID: 0}

@@ -6,64 +6,65 @@ public class ObjectAction : MonoBehaviour
 {
     public ActionTypes ActionType;
     public ActionTriggerType TriggerType;
-    [SerializeField] private GameObject door;
     [SerializeField] private Collider triggerCollider;
     [SerializeField] private bool isActive;
+    [SerializeField] private string requiredItemId;
+    [SerializeField] private DataProvider dataProvider;
+
+    public bool IsActive { get => isActive; }
+    public string RequiredItemId { get => requiredItemId;}
 
 
-    private void Start()
+    public virtual void SetActive(bool value)
     {
-        switch (ActionType)
-        {
-            case ActionTypes.DoorOpen:
-                DataProvider.Instance.Events.OnDoorOpenEvent += OpenDoor;
-                break;
-            default:
-                break;
-        }
+        isActive = value;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        dataProvider = DataProvider.Instance;
+
+        if (TriggerType == ActionTriggerType.PressE && isActive)
+        {
+            dataProvider.ClosesActionObject = this;
+
+            return;
+        }
+
         if(TriggerType != ActionTriggerType.TriggerEnter || !isActive)
         {
             return;
         }
-
-        if(other.tag == "Player")
+        
+        if(other.tag == "Player" || other.tag == "Enemy")
         {
             Action();
         }
     }
     private void OnTriggerExit(Collider other)
     {
+        if (TriggerType == ActionTriggerType.PressE && isActive)
+        {
+            dataProvider.ClosesActionObject = null;
+
+            return;
+        }
+
         if (TriggerType != ActionTriggerType.TriggerEnter || !isActive)
         {
             return;
         }
 
-        if (other.tag == "Player")
+        if (other.tag == "Player" || other.tag == "Enemy")
         {
             Action();
         }
     }
 
-    public void Action()
+    public virtual void Action()
     {
-        switch (ActionType)
-        {
-            case ActionTypes.DoorOpen:
-                Animator anim = door.GetComponent<Animator>();
-                anim.SetBool("Open", !anim.GetBool("Open"));
-                DataProvider.Instance.Events.DoorOpenEvent(this, this);
-                break;
-            default:
-                break;
-        }
+
     }
 
-    public ObjectAction OpenDoor(ObjectAction action)
-    {
-        return this;
-    }
+
 }
