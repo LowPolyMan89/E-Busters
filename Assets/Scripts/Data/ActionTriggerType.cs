@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum ActionTriggerType
 {
-TriggerEnter
+TriggerEnter, PressE
 }

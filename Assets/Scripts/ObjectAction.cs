@@ -8,13 +8,12 @@ public class ObjectAction : MonoBehaviour
     public ActionTriggerType TriggerType;
     [SerializeField] private Collider triggerCollider;
     [SerializeField] private bool isActive;
+    [SerializeField] private string requiredItemId;
+    [SerializeField] private DataProvider dataProvider;
 
     public bool IsActive { get => isActive; }
+    public string RequiredItemId { get => requiredItemId;}
 
-    private void Start()
-    {
-
-    }
 
     public virtual void SetActive(bool value)
     {
@@ -23,6 +22,15 @@ public class ObjectAction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        dataProvider = DataProvider.Instance;
+
+        if (TriggerType == ActionTriggerType.PressE && isActive)
+        {
+            dataProvider.ClosesActionObject = this;
+
+            return;
+        }
+
         if(TriggerType != ActionTriggerType.TriggerEnter || !isActive)
         {
             return;
@@ -35,6 +43,13 @@ public class ObjectAction : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        if (TriggerType == ActionTriggerType.PressE && isActive)
+        {
+            dataProvider.ClosesActionObject = null;
+
+            return;
+        }
+
         if (TriggerType != ActionTriggerType.TriggerEnter || !isActive)
         {
             return;

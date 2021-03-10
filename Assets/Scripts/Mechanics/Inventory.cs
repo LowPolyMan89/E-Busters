@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,22 @@ public class Inventory : MonoBehaviour
     public bool CheckNearItemInList(Item item)
     {
         return NearestItem.Contains(item);
+    }
+
+    internal Item GetItem(string id)
+    {
+        Item item = null;
+
+        foreach(var i in items)
+        {
+            if(i.ID == id)
+            {
+                item = i;
+                return item;
+            }
+        }
+
+        return item;
     }
 
     public bool CheckItemInList(Item item)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764582c0c35bdc1458ed7d7dac10cc3a, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  MoveSpeed: 50
-  SprintSpeed: 100
-  AimSpeed: 30
+  MoveSpeed: 3
+  SprintSpeed: 5
+  AimSpeed: 1
   NoizePerSprint: 10

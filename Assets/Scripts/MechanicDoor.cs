@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : ObjectAction
+public class MechanicDoor : ObjectAction
 {
     [SerializeField] private GameObject door;
     [SerializeField] private string doorId;
     [SerializeField] private GameObject redColors;
     [SerializeField] private GameObject greenColors;
     [SerializeField] private bool isEmergencyStatus = false;
-    public string DoorId { get => doorId;}
+    public string DoorId { get => doorId; }
     public bool IsEmergencyStatus { get => isEmergencyStatus; }
 
     private void Start()
     {
         DataProvider.Instance.Events.OnDoorOpenEvent += OpenDoor;
+        DataProvider.Instance.Events.OnInteractiveAction += Action;
         Activate(base.IsActive);
     }
     public override void Action()
     {
-        if(!DataProvider.Instance.Player.Inventory.GetItem(RequiredItemId) && RequiredItemId != "")
+        if(DataProvider.Instance.ClosesActionObject != this)
+        {
+            return;
+        }
+    
+
+        if (!DataProvider.Instance.Player.Inventory.GetItem(RequiredItemId) && RequiredItemId != "")
         {
             return;
         }
@@ -32,27 +39,17 @@ public class Door : ObjectAction
 
     public void EmergencyOpen()
     {
-        isEmergencyStatus = true;
-        Animator anim = door.GetComponent<Animator>();
-        anim.SetBool("Open", true);
-        DataProvider.Instance.Events.DoorOpenEvent(this, this);
-        base.SetActive(false);
-        Activate(false);
+
     }
 
     public void NormalStatus()
     {
-        isEmergencyStatus = false;
-        Animator anim = door.GetComponent<Animator>();
-        anim.SetBool("Open", false);
-        DataProvider.Instance.Events.DoorOpenEvent(this, this);
-        base.SetActive(true);
-        Activate(true);
+
     }
 
     public void Activate(bool v)
     {
-        if(v == true)
+        if (v == true)
         {
             redColors.SetActive(false);
             greenColors.SetActive(true);
@@ -68,5 +65,10 @@ public class Door : ObjectAction
     public ObjectAction OpenDoor(ObjectAction action)
     {
         return this;
+    }
+
+    private void OnDestroy()
+    {
+        DataProvider.Instance.Events.OnInteractiveAction -= Action;
     }
 }
