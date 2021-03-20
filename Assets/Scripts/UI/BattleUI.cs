@@ -19,7 +19,7 @@ public class BattleUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     [SerializeField] private Transform DoorDataPanelTransform;
     [SerializeField] private List<InventoryItemSlot> inventoryItemSlots = new List<InventoryItemSlot>();
     [SerializeField] private InventoryItemSlot inventoryItemSlotSelected = null;
-    private bool isDrag;
+    [SerializeField] private bool isDrag;
 
     private void Start()
     {
@@ -113,7 +113,7 @@ public class BattleUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     private void Update()
     {
-        if(inventoryItemSlotSelected != null && Input.GetMouseButtonDown(0))
+        if(inventoryItemSlotSelected != null && Input.GetMouseButton(0) && inventoryItemSlotSelected.ItemInSlot != null)
         {
             isDrag = true;
         }
