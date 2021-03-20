@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
-public class BattleUI : MonoBehaviour
+public class BattleUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private DataProvider dataProvider;
 
@@ -16,6 +18,8 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Sprite emptySprite;
     [SerializeField] private Transform DoorDataPanelTransform;
     [SerializeField] private List<InventoryItemSlot> inventoryItemSlots = new List<InventoryItemSlot>();
+    [SerializeField] private InventoryItemSlot inventoryItemSlotSelected = null;
+    private bool isDrag;
 
     private void Start()
     {
@@ -105,5 +109,49 @@ public class BattleUI : MonoBehaviour
     {
         dataProvider.Events.OnUiUpdate -= UpdateUI;
         dataProvider.Events.OnAddItemToSlot -= AddItemToSlot;
+    }
+
+    private void Update()
+    {
+        if(inventoryItemSlotSelected != null && Input.GetMouseButtonDown(0))
+        {
+            isDrag = true;
+        }
+        else
+        {
+            isDrag = false;
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+       
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(eventData.hovered[0].name.Contains("ItemSlot"))
+        {
+            inventoryItemSlotSelected = eventData.hovered[0].GetComponent<InventoryItemSlot>();
+        }
+       
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (eventData.hovered[0].name.Contains("ItemSlot"))
+        {
+            inventoryItemSlotSelected = null;
+        }
     }
 }

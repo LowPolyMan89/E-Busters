@@ -6,18 +6,48 @@ public class Terminal : MonoBehaviour
 {
     private bool isCanActivate;
     public DataProvider dataProvider;
-
+    public Animator animator;
+    public bool isActive = true;
+    [SerializeField] private Renderer material;
 
     private void Start()
     {
         dataProvider = DataProvider.Instance;
+        CheckActive();
         if(dataProvider)
             dataProvider.Events.OnInteractiveAction += Open;
+
+        StartCoroutine(SlowUpdate());
+    }
+
+    private IEnumerator SlowUpdate()
+    {
+        yield return new WaitForSeconds(0.4f);
+        CheckActive();
+        StartCoroutine(SlowUpdate());
     }
 
     public void Open()
     {
-        OpenTerminalPanel(this);
+        if(isActive)
+            OpenTerminalPanel(this);
+    }
+
+    private void CheckActive()
+    {
+        if(!material)
+        {
+            return;
+        }
+
+        if(isActive)
+        {
+           material.materials[0].SetColor("_EmissionColor", Color.green);
+        }
+        else
+        {
+            material.materials[0].SetColor("_EmissionColor", Color.red);
+        }
     }
 
     public virtual void UseTerminal()
@@ -34,7 +64,15 @@ public class Terminal : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-           dataProvider.ClosesTerminal = this;
+            if (!isActive)
+            {
+                return;
+            }
+            dataProvider.ClosesTerminal = this;
+            if(animator)
+            {
+                animator.SetBool("Open", true);
+            }
         }
     }
 
@@ -42,8 +80,17 @@ public class Terminal : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            if (!isActive)
+            {
+                return;
+            }
+
             dataProvider.ClosesTerminal = null;
             dataProvider.BattleUI.OpenTerminalWindow(this);
+            if(animator)
+            {
+                animator.SetBool("Open", false);
+            }
         }
     }
 
