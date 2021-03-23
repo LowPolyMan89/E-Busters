@@ -74,7 +74,6 @@ public class EventSystem : MonoBehaviour
         if (OnBulletHitEvent != null)
         {
             OnMapNoizeChange(outValue);
-            print("Event: NoizeChangeEvent = " + outValue);
             UiUpdate();
         }
 

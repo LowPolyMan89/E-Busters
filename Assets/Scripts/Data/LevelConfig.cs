@@ -9,4 +9,5 @@ public class LevelConfig : ScriptableObject
     public float LevelPower;
     public float PowerPerSecond;
     public float DangerStatusValue;
+    public float RechargingSpeed;
 }
