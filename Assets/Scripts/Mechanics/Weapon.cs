@@ -9,10 +9,12 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float ammoStorage;
     [SerializeField] private VfxStarter vfxStarter;
     [SerializeField] private WeaponStage weaponStage;
+    [SerializeField] private WeaponType weaponType;
     public ParticleSystem BulletVfx;
     public bool isReload = false;
+    [SerializeField] private bool isGrownded;
 
-    private DataProvider _DataProvider;
+    private DataProvider dataProvider;
 
     [HideInInspector] public WeaponData weaponData;
 
@@ -23,14 +25,32 @@ public class Weapon : MonoBehaviour
 
     public void CreateWeapon()
     {
-        _DataProvider = DataProvider.Instance;
+        dataProvider = DataProvider.Instance;
         reloadTime = weaponData.ReloadTime;
         ammoCount = weaponData.AmmoCount;
         ammoStorage = weaponData.AmmoStorage;
 
         if(weaponStage == WeaponStage.Player)
-            _DataProvider.CurrentWeapon = this;   
+            dataProvider.Player.CurrentWeapon = this;   
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            dataProvider = DataProvider.Instance;
+            print(gameObject.name);
+            dataProvider.Player.AddClosesWeapon(this);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            dataProvider = DataProvider.Instance;
+            dataProvider.Player.AddClosesWeapon(null);
+        }
     }
 
     public void StartVfx()
@@ -51,10 +71,10 @@ public class Weapon : MonoBehaviour
         else
         {
             if (weaponStage == WeaponStage.Player)
-                _DataProvider.Events.NoizeChangeEvent(_DataProvider.CurrentWeapon.weaponData.NoizePerShoot, _DataProvider.CurrentWeapon.weaponData.NoizePerShoot);
+                dataProvider.Events.NoizeChangeEvent(dataProvider.Player.CurrentWeapon.weaponData.NoizePerShoot, dataProvider.Player.CurrentWeapon.weaponData.NoizePerShoot);
         }
        
-        _DataProvider.Events.UiUpdate();
+        dataProvider.Events.UiUpdate();
 
     }
 
@@ -102,12 +122,15 @@ public class Weapon : MonoBehaviour
         }
 
         isReload = false;
-        _DataProvider.Events.UiUpdate();
+        dataProvider.Events.UiUpdate();
     }
 
 
 }
-
+public enum WeaponType
+{
+    Close, Range
+}
 public enum WeaponStage
 {
     Enemy, Player

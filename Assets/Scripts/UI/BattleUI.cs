@@ -65,10 +65,15 @@ public class BattleUI : MonoBehaviour
                 currentitem++;
         }
 
-        if(dataProvider.CurrentWeapon.isReload)
+        if(!dataProvider.Player.CurrentWeapon)
+        {
+            return;
+        }
+
+        if(dataProvider.Player.CurrentWeapon.isReload)
         {
             reloadTime += Time.deltaTime;
-            reloadImage.fillAmount = reloadTime / dataProvider.CurrentWeapon.ReloadTime;
+            reloadImage.fillAmount = reloadTime / dataProvider.Player.CurrentWeapon.ReloadTime;
         }
         else
         {
@@ -155,7 +160,12 @@ public class BattleUI : MonoBehaviour
     {
         noizeCountSprite.fillAmount = dataProvider.CurrentMapData.Noize / 100f;
         powerCountSprite.fillAmount = dataProvider.CurrentMapData.Power / dataProvider.LevelConfig.LevelPower;
-        ammoCountText.text = (dataProvider.CurrentWeapon.AmmoCount.ToString("") + " / "  + dataProvider.CurrentWeapon.AmmoStorage.ToString(""));
+        if (!dataProvider.Player.CurrentWeapon)
+        {
+            ammoCountText.text = "00";
+            return;
+        }
+        ammoCountText.text = (dataProvider.Player.CurrentWeapon.AmmoCount.ToString("") + " / "  + dataProvider.Player.CurrentWeapon.AmmoStorage.ToString(""));
     }
 
     private void OnDisable()

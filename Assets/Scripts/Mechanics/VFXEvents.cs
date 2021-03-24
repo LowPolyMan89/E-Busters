@@ -27,7 +27,7 @@ public class VFXEvents : MonoBehaviour
 
             if (collisionEvents[i].colliderComponent.gameObject.GetComponent<DamegableObject>())
             {
-                DataProvider.Instance.Events.BulletHitEvent(dataProvider.CurrentWeapon.weaponData.DamageNormal, collisionEvents[i].colliderComponent.gameObject.GetComponent<DamegableObject>());
+                DataProvider.Instance.Events.BulletHitEvent(dataProvider.Player.CurrentWeapon.weaponData.DamageNormal, collisionEvents[i].colliderComponent.gameObject.GetComponent<DamegableObject>());
             }
 
             VfxStarter vfx = Instantiate(vfxStarter, collisionEvents[i].intersection, Quaternion.identity);

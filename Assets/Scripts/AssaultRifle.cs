@@ -10,7 +10,7 @@ public class AssaultRifle : Weapon
     private void Start()
     {
         base.weaponData = Data;
-        base.CreateWeapon();
+
         CreateBullet();
 
     }
