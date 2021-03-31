@@ -5,22 +5,22 @@ using UnityEngine.EventSystems;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
-public class BattleUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class BattleUI : MonoBehaviour
 {
     private DataProvider dataProvider;
-
-    [SerializeField] private Image bulletCountSprite;
+    [SerializeField] private Image reloadImage;
     [SerializeField] private Image noizeCountSprite;
     [SerializeField] private Image powerCountSprite;
     [SerializeField] private Text ammoCountText;
     public TerminalPanel TerminalPanel;
     public DoorDataPanel DoorDataPanelPrefab;
-    [SerializeField] private Sprite emptySprite;
+    public Sprite emptySprite;
     [SerializeField] private Transform DoorDataPanelTransform;
     [SerializeField] private List<InventoryItemSlot> inventoryItemSlots = new List<InventoryItemSlot>();
-    [SerializeField] private InventoryItemSlot inventoryItemSlotSelected = null;
-    private bool isDrag;
-
+    [SerializeField] private Transform canvas;
+    [SerializeField] private List<ItemInfoPanel> itemInfoPanels = new List<ItemInfoPanel>();
+    [SerializeField] private Vector3 itemInfoPanelOffset;
+    private float reloadTime = 0f;
     private void Start()
     {
         dataProvider = DataProvider.Instance;
@@ -29,9 +29,68 @@ public class BattleUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         Invoke("UpdateUI", 0.5f);
     }
 
+    private void Update()
+    {
+        int activecount = 0;
+        int currentitem = 0;
+        activecount = dataProvider.Player.Inventory.NearestItem.Count;
+
+        foreach(var i in itemInfoPanels)
+        {
+            if(activecount == 0)
+            {
+                i.gameObject.SetActive(false);
+            }
+            else
+            {
+                itemInfoPanels[currentitem].gameObject.SetActive(true);
+                Vector3 itempos = dataProvider.Player.Inventory.NearestItem[currentitem].transform.position;
+                Vector3 offsetpos = new Vector3(itempos.x + itemInfoPanelOffset.x, itempos.y + itemInfoPanelOffset.y, itempos.z + itemInfoPanelOffset.z);
+                itemInfoPanels[currentitem].transform.position = Camera.main.WorldToScreenPoint(offsetpos);
+                Sprite sprite = null;
+
+                foreach (var b in dataProvider.ItemsData.ItemsDatas)
+                {
+                    if (b.ID == dataProvider.Player.Inventory.NearestItem[currentitem].ID)
+                    {
+                        sprite = b.Sprite;
+                        break;
+                    }
+                }
+
+                itemInfoPanels[currentitem].image.sprite = sprite;
+            }
+
+            if(currentitem + 1 < activecount )
+                currentitem++;
+        }
+
+        if(!dataProvider.Player.CurrentWeapon)
+        {
+            return;
+        }
+
+        if(dataProvider.Player.CurrentWeapon.isReload)
+        {
+            reloadTime += Time.deltaTime;
+            reloadImage.fillAmount = reloadTime / dataProvider.Player.CurrentWeapon.ReloadTime;
+        }
+        else
+        {
+            reloadTime = 0f;
+            reloadImage.fillAmount = 0;
+
+        }
+    }
+
     public void CreateInventoryItemSlot(InventoryItemSlot inventoryItemSlot)
     {
         inventoryItemSlots.Add(inventoryItemSlot);
+    }
+
+    public void CreateItemInfoPanel(Item item)
+    {
+
     }
 
     public Item AddItemToSlot(Item item)
@@ -99,10 +158,14 @@ public class BattleUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void UpdateUI()
     {
-        bulletCountSprite.fillAmount = (float)(dataProvider.CurrentWeapon.AmmoCount / dataProvider.CurrentWeapon.weaponData.AmmoCount);
         noizeCountSprite.fillAmount = dataProvider.CurrentMapData.Noize / 100f;
         powerCountSprite.fillAmount = dataProvider.CurrentMapData.Power / dataProvider.LevelConfig.LevelPower;
-        ammoCountText.text = dataProvider.CurrentWeapon.AmmoStorage.ToString("");
+        if (!dataProvider.Player.CurrentWeapon)
+        {
+            ammoCountText.text = "00";
+            return;
+        }
+        ammoCountText.text = (dataProvider.Player.CurrentWeapon.AmmoCount.ToString("") + " / "  + dataProvider.Player.CurrentWeapon.AmmoStorage.ToString(""));
     }
 
     private void OnDisable()
@@ -111,47 +174,5 @@ public class BattleUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         dataProvider.Events.OnAddItemToSlot -= AddItemToSlot;
     }
 
-    private void Update()
-    {
-        if(inventoryItemSlotSelected != null && Input.GetMouseButtonDown(0))
-        {
-            isDrag = true;
-        }
-        else
-        {
-            isDrag = false;
-        }
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-       
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if(eventData.hovered[0].name.Contains("ItemSlot"))
-        {
-            inventoryItemSlotSelected = eventData.hovered[0].GetComponent<InventoryItemSlot>();
-        }
-       
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (eventData.hovered[0].name.Contains("ItemSlot"))
-        {
-            inventoryItemSlotSelected = null;
-        }
-    }
 }

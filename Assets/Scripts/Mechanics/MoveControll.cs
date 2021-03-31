@@ -13,7 +13,7 @@ public class MoveControll : MonoBehaviour
     [SerializeField] private float depth;
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private Vector3 _cameraOffset;
-    [SerializeField] private DataProvider _dataProvider;
+    [SerializeField] private DataProvider dataProvider;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Player player;
     [SerializeField] private float deadZoneRadius;
@@ -26,10 +26,10 @@ public class MoveControll : MonoBehaviour
 
     private void Start()
     {
-        _dataProvider = DataProvider.Instance;
+        dataProvider = DataProvider.Instance;
         _playerBody = _player.GetComponent<Rigidbody>();
         _cameraTransform = Camera.main.transform;
-        player = _dataProvider.Player;
+        player = dataProvider.Player;
     }
 
     private void Update()
@@ -38,24 +38,24 @@ public class MoveControll : MonoBehaviour
         {
             _flashLight.SetActive(!_flashLight.activeSelf);
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && dataProvider.Player.CurrentWeapon)
         {
-            _dataProvider.CurrentWeapon.Reload(_dataProvider.CurrentWeapon.ReloadTime);
+            dataProvider.Player.CurrentWeapon.Reload(dataProvider.Player.CurrentWeapon.ReloadTime);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            _dataProvider.Events.EnteractiveAction();
+            dataProvider.Events.EnteractiveAction();
         }
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && dataProvider.Player.CurrentWeapon)
         {
             if (Input.GetMouseButton(0))
             {
-                _dataProvider.CurrentWeapon.Shoot();
+                dataProvider.Player.CurrentWeapon.Shoot();
             }
         }
 
-        if (_dataProvider.BattleUI.TerminalPanel.isActiveAndEnabled)
+        if (dataProvider.BattleUI.TerminalPanel.isActiveAndEnabled)
         {
             return;
         }
@@ -84,12 +84,15 @@ public class MoveControll : MonoBehaviour
         _cameraTransform.position = new Vector3(playerPosition.x + _cameraOffset.x, _cameraOffset.y, playerPosition.z + _cameraOffset.z);
     }
 
+    private void SwitchWeapon()
+    {
 
+    }
 
 
     private void FixedUpdate()
     {
-        if(!player || _dataProvider.BattleUI.TerminalPanel.isActiveAndEnabled)
+        if(!player || dataProvider.BattleUI.TerminalPanel.isActiveAndEnabled)
         {
             return;
         }
@@ -101,7 +104,7 @@ public class MoveControll : MonoBehaviour
             if(Input.GetKey(KeyCode.LeftShift) && !Input.GetMouseButton(1))
             {
                 localspeed = player.PlayerStats.SprintSpeed;
-                _dataProvider.Events.NoizeChangeEvent(player.PlayerStats.NoizePerSprint * 0.01f, player.PlayerStats.NoizePerSprint * 0.01f);
+                dataProvider.Events.NoizeChangeEvent(player.PlayerStats.NoizePerSprint * 0.01f, player.PlayerStats.NoizePerSprint * 0.01f);
             }
             else if(Input.GetMouseButton(1) && !Input.GetKey(KeyCode.LeftShift))
             {

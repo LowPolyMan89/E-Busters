@@ -13,6 +13,7 @@ public class MapData : MonoBehaviour
     [SerializeField] private List<Door> allDoors = new List<Door>();
     [SerializeField] private List<GameObject> energyStatusGroup = new List<GameObject>(3);
     [SerializeField] private EnergyStatus energyStatus = EnergyStatus.Normal;
+    [SerializeField] private bool isRecharging = false;
 
     internal void OpenAllDoors()
     {
@@ -60,8 +61,11 @@ public class MapData : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (!isPowerStop)
         {
-            float value = dataProvider.LevelConfig.PowerPerSecond;
-            dataProvider.Events.PowerChangeEvent(-value, -value);
+            if (!isRecharging)
+            {
+                float value = dataProvider.LevelConfig.PowerPerSecond;
+                dataProvider.Events.PowerChangeEvent(-value, -value);
+            }
             CheckEnergyStatus();
         }
         StartCoroutine(PowerChanger());
@@ -69,13 +73,27 @@ public class MapData : MonoBehaviour
 
     private void CheckEnergyStatus()
     {
+        if(isRecharging)
+        {
+            float value = dataProvider.LevelConfig.RechargingSpeed;
+            dataProvider.Events.PowerChangeEvent(value, value);
+
+            print("Power level: " + power);
+            if(power > dangerStatusValue)
+            {
+                isRecharging = false;
+            }
+
+            return;
+        }
+
         if(power >= dangerStatusValue)
         {
             energyStatus = EnergyStatus.Normal;
             energyStatusGroup[0].SetActive(true);
             energyStatusGroup[1].SetActive(false);
             energyStatusGroup[2].SetActive(false);
-
+            print("Normal energy status!");
             NormalAllDoors();
 
         }
@@ -85,15 +103,17 @@ public class MapData : MonoBehaviour
             energyStatusGroup[0].SetActive(false);
             energyStatusGroup[1].SetActive(true);
             energyStatusGroup[2].SetActive(false);
-
+            print("Danger energy status!");
             OpenAllDoors();
         }
         if(power <= 0)
         {
+            isRecharging = true;
             energyStatus = EnergyStatus.None;
             energyStatusGroup[0].SetActive(false);
             energyStatusGroup[1].SetActive(false);
             energyStatusGroup[2].SetActive(true);
+            print("Critical energy status! Start recharging!");
         }
     }
 

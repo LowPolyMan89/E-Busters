@@ -15,6 +15,7 @@ public class EventSystem : MonoBehaviour
     public event Func<EnemySpawner, EnemySpawner> OnSpawnEnemyEvent;
     public event Action OnInteractiveAction;
     public event Func<Item, Item> OnAddItemToSlot;
+    public event Func<Weapon, Weapon> OnAddWeaponToSlot;
 
 
     public EnemySpawner SpawnEnemy(EnemySpawner outValu, EnemySpawner spawner)
@@ -33,6 +34,16 @@ public class EventSystem : MonoBehaviour
         if (OnAddItemToSlot != null)
         {
             OnAddItemToSlot(inValue);
+        }
+
+        return inValue;
+    }
+
+    public Weapon AddWeaponToSlot(Weapon outValu, Weapon inValue)
+    {
+        if (OnAddWeaponToSlot != null)
+        {
+            OnAddWeaponToSlot(inValue);
         }
 
         return inValue;
@@ -74,7 +85,6 @@ public class EventSystem : MonoBehaviour
         if (OnBulletHitEvent != null)
         {
             OnMapNoizeChange(outValue);
-            print("Event: NoizeChangeEvent = " + outValue);
             UiUpdate();
         }
 

@@ -16,3 +16,4 @@ MonoBehaviour:
   LevelPower: 100
   PowerPerSecond: 1
   DangerStatusValue: 50
+  RechargingSpeed: 2
