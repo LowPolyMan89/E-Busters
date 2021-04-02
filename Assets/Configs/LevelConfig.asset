@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyTriggerRadius: 50
   LevelPower: 100
-  PowerPerSecond: 1
+  PowerPerSecond: 5
   DangerStatusValue: 50
   RechargingSpeed: 2
