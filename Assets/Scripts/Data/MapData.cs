@@ -73,6 +73,11 @@ public class MapData : MonoBehaviour
 
     private void CheckEnergyStatus()
     {
+        if(energyStatusGroup.Count < 1)
+        {
+            return;
+        }
+
         if(isRecharging)
         {
             float value = dataProvider.LevelConfig.RechargingSpeed;

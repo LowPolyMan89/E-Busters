@@ -11,6 +11,7 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Image reloadImage;
     [SerializeField] private Image noizeCountSprite;
     [SerializeField] private Image powerCountSprite;
+    [SerializeField] private Image playerHPCountSprite;
     [SerializeField] private Text ammoCountText;
     public TerminalPanel TerminalPanel;
     public DoorDataPanel DoorDataPanelPrefab;
@@ -160,6 +161,7 @@ public class BattleUI : MonoBehaviour
     {
         noizeCountSprite.fillAmount = dataProvider.CurrentMapData.Noize / 100f;
         powerCountSprite.fillAmount = dataProvider.CurrentMapData.Power / dataProvider.LevelConfig.LevelPower;
+        playerHPCountSprite.fillAmount = dataProvider.Player.PlayerHP / 100f;
         if (!dataProvider.Player.CurrentWeapon)
         {
             ammoCountText.text = "00";
