@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961038616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.77, z: 0}
+  m_LocalPosition: {x: 0.04, y: 0.77, z: -1.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3833209389128672912}
@@ -44,8 +44,8 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.8059772, b: 0.495283, a: 1}
   m_Intensity: 10.02
-  m_Range: 16.98
-  m_SpotAngle: 42.642216
+  m_Range: 24.510752
+  m_SpotAngle: 80.67569
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
@@ -80,7 +80,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3383
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -122,7 +122,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3833209389128672924}
-  m_LocalRotation: {x: -0, y: 0.0006931189, z: -0, w: -0.99999976}
+  m_LocalRotation: {x: 0, y: 0.00068946736, z: -0, w: -0.9999998}
   m_LocalPosition: {x: -61.100002, y: -0.39, z: -12.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -226,6 +226,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   weaponSlot: {fileID: 5981134754359287335}
+  closesWeapon: {fileID: 0}
   CurrentWeapon: {fileID: 0}
   inventory: {fileID: 1715213478862704816}
 --- !u!114 &1715213478862704816

@@ -12,6 +12,7 @@ public class EventSystem : MonoBehaviour
     public event Action OnBulletCountChange;
     public event Func<float, float> OnMapNoizeChange;
     public event Func<float, float> OnMapPowerChange;
+    public event Func<float, Player> OnPlayerHpChange;
     public event Func<EnemySpawner, EnemySpawner> OnSpawnEnemyEvent;
     public event Action OnInteractiveAction;
     public event Func<Item, Item> OnAddItemToSlot;
@@ -89,6 +90,18 @@ public class EventSystem : MonoBehaviour
         }
 
         return outValue;
+    }
+
+    public Player PlayerChangeHPEvent(float value, Player player)
+    {
+
+        if (OnPlayerHpChange != null)
+        {
+            OnPlayerHpChange(value);
+            UiUpdate();
+        }
+
+        return player;
     }
 
     public float PowerChangeEvent(float inValue, float outValue)

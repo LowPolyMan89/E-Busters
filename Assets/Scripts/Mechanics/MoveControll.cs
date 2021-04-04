@@ -21,6 +21,7 @@ public class MoveControll : MonoBehaviour
     private Vector3 EulerAngles;
     private float speed = 0;
     [SerializeField] private NavMeshAgent agent;
+    AnimationController animationController;
 
     private float noizeAddSprintTime = 0f;
 
@@ -30,6 +31,15 @@ public class MoveControll : MonoBehaviour
         _playerBody = _player.GetComponent<Rigidbody>();
         _cameraTransform = Camera.main.transform;
         player = dataProvider.Player;
+        animationController = new AnimationController();
+        StartCoroutine(InitAnimator());
+        
+    }
+
+    private IEnumerator InitAnimator()
+    {
+        yield return new WaitForSeconds(0.2f);
+        animationController.InitController(dataProvider.Player.Animator);
     }
 
     private void Update()
@@ -49,10 +59,16 @@ public class MoveControll : MonoBehaviour
 
         if (Input.GetMouseButton(1) && dataProvider.Player.CurrentWeapon)
         {
+            animationController.SetAim("AimingRifle", true);
+
             if (Input.GetMouseButton(0))
             {
                 dataProvider.Player.CurrentWeapon.Shoot();
             }
+        }
+        else
+        {
+            animationController.SetAim("AimingRifle", false);
         }
 
         if (dataProvider.BattleUI.TerminalPanel.isActiveAndEnabled)
@@ -82,6 +98,15 @@ public class MoveControll : MonoBehaviour
            // playerTransform.localEulerAngles = new Vector3(0f, _player.transform.localRotation.eulerAngles.y, 0f);
         }
         _cameraTransform.position = new Vector3(playerPosition.x + _cameraOffset.x, _cameraOffset.y, playerPosition.z + _cameraOffset.z);
+
+        if(dataProvider.Player.CurrentWeapon)
+        {
+            animationController.PickUpItemAnim("PickUpRifle", "Rifle", true);
+        }
+        else
+        {
+            animationController.PickUpItemAnim("PickUpRifle", "Rifle", false);
+        }
     }
 
     private void SwitchWeapon()
@@ -105,14 +130,17 @@ public class MoveControll : MonoBehaviour
             {
                 localspeed = player.PlayerStats.SprintSpeed;
                 dataProvider.Events.NoizeChangeEvent(player.PlayerStats.NoizePerSprint * 0.01f, player.PlayerStats.NoizePerSprint * 0.01f);
+                animationController.Move("Run", "Run", true);
             }
             else if(Input.GetMouseButton(1) && !Input.GetKey(KeyCode.LeftShift))
             {
                 localspeed = player.PlayerStats.AimSpeed;
+                animationController.Move("Run", "Run", false);
             }
             else
             {
                 localspeed = player.PlayerStats.MoveSpeed;
+                animationController.Move("Run", "Run", false);
             }
 
             speed = Mathf.Lerp(speed, localspeed, 10 * Time.deltaTime);
@@ -120,12 +148,47 @@ public class MoveControll : MonoBehaviour
             Vector3 direction = (Vector3.right * Input.GetAxis("Horizontal") + Vector3.forward * Input.GetAxis("Vertical")).normalized;
 
             agent.Move(direction * speed * Time.deltaTime);
+
+            animationController.Move("Walking", "Walking", true);
         }
         else
         {
             speed = 0;
+            animationController.Move("Walking", "Walking", false);
+            animationController.Move("Run", "Run", false);
         }
 
 
     }
+
+    private class AnimationController
+    {
+        private Animator animator;
+
+        public void InitController(Animator value)
+        {
+            animator = value;
+        }
+
+
+        public void SetAim(string id,  bool value)
+        {
+            if(animator)
+                animator.SetBool(id, value);
+        }
+
+        public void PickUpItemAnim(string id, string itemType, bool value)
+        {
+            if (animator)
+                animator.SetBool(id, value);
+        }
+
+        public void Move(string id, string moveType, bool value)
+        {
+            if (animator)
+                animator.SetBool(id, value);
+        }
+    }
 }
+
+

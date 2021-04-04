@@ -11,7 +11,9 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Image reloadImage;
     [SerializeField] private Image noizeCountSprite;
     [SerializeField] private Image powerCountSprite;
+    [SerializeField] private Image playerHPCountSprite;
     [SerializeField] private Text ammoCountText;
+    public LootBoxPanel LootBoxPanel;
     public TerminalPanel TerminalPanel;
     public DoorDataPanel DoorDataPanelPrefab;
     public Sprite emptySprite;
@@ -93,6 +95,11 @@ public class BattleUI : MonoBehaviour
 
     }
 
+    public void OpenLootBoxPanel(List<Item> items, bool value)
+    {
+        LootBoxPanel.gameObject.SetActive(value);
+    }
+
     public Item AddItemToSlot(Item item)
     {
         foreach(var i in inventoryItemSlots)
@@ -160,6 +167,7 @@ public class BattleUI : MonoBehaviour
     {
         noizeCountSprite.fillAmount = dataProvider.CurrentMapData.Noize / 100f;
         powerCountSprite.fillAmount = dataProvider.CurrentMapData.Power / dataProvider.LevelConfig.LevelPower;
+        playerHPCountSprite.fillAmount = dataProvider.Player.PlayerHP / 100f;
         if (!dataProvider.Player.CurrentWeapon)
         {
             ammoCountText.text = "00";
