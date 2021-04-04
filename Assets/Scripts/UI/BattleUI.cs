@@ -125,19 +125,25 @@ public class BattleUI : MonoBehaviour
 
     public void OpenTerminalWindow(Terminal terminal)
     {
+
+        print("OpenTerminalWindow check!");
+
         if (dataProvider.ClosesTerminal == null)
         {
             TerminalPanel.gameObject.SetActive(false);
+            print("Close terminal!");
             return;
         }
 
         if (!TerminalPanel.gameObject.activeSelf)
         {
+            print("Open terminal!");
             TerminalPanel.gameObject.SetActive(true);
             terminal.UseTerminal();
         }
         else
         {
+            print("Close terminal!");
             TerminalPanel.gameObject.SetActive(false);
         }
              
