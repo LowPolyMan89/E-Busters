@@ -13,6 +13,7 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Image powerCountSprite;
     [SerializeField] private Image playerHPCountSprite;
     [SerializeField] private Text ammoCountText;
+    public LootBoxPanel LootBoxPanel;
     public TerminalPanel TerminalPanel;
     public DoorDataPanel DoorDataPanelPrefab;
     public Sprite emptySprite;
@@ -92,6 +93,11 @@ public class BattleUI : MonoBehaviour
     public void CreateItemInfoPanel(Item item)
     {
 
+    }
+
+    public void OpenLootBoxPanel(List<Item> items, bool value)
+    {
+        LootBoxPanel.gameObject.SetActive(value);
     }
 
     public Item AddItemToSlot(Item item)

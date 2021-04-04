@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum ActionTypes
 {
-DoorOpen
+DoorOpen, LootBoxOpen
 }
