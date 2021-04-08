@@ -15,6 +15,11 @@ public class AssaultRifle : Weapon
 
     }
 
+    public override void PickUpItems()
+    {
+        base.PickUpItems();
+    }
+
     public void CreateBullet()
     {
         angle = Data.Angle;

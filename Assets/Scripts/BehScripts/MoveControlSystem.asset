@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23f08d2ae4cba14087c1ed36193d82b, type: 3}
+  m_Name: MoveControlSystem
+  m_EditorClassIdentifier: 
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(-330.267151,-425.7028)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(-53.8385468,282.868835)","WatchedFields":["repeatForever"]},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"Move","NodeData":{"Offset":"(167.6451,257.995819)","WatchedFields":["distanceDelta","WalkSpeed","RunSpeed","AimSpeed","deadZoneRadius","PlayerGameObject"]},"ID":2,"Name":"Move","Instant":true,"SharedGameObjectPlayerGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true},"SharedFloatdeadZoneRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DeadZoneRadius","IsShared":true,"SinglemValue":10},"SharedFloatdistanceDelta":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceDelta","IsShared":true,"SinglemValue":1.5},"SharedFloatWalkSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"MoveSpeed","IsShared":true,"SinglemValue":3},"SharedFloatRunSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"RunSpeed","IsShared":true,"SinglemValue":5},"SharedFloatAimSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AimSpeed","IsShared":true,"SinglemValue":1}}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"MoveSpeed","IsShared":true,"SinglemValue":3},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"RunSpeed","IsShared":true,"SinglemValue":5},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AimSpeed","IsShared":true,"SinglemValue":1},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceDelta","IsShared":true,"SinglemValue":1.5},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DeadZoneRadius","IsShared":true,"SinglemValue":10},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true}]}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 1.6.8

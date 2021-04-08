@@ -25,7 +25,7 @@ public class Door : ObjectAction
         }
 
         Animator anim = door.GetComponent<Animator>();
-        print("Door open: " + this.GetInstanceID());
+       // print("Door open: " + this.GetInstanceID());
         anim.SetBool("Open", !anim.GetBool("Open"));
         DataProvider.Instance.Events.DoorOpenEvent(this, this);
     }

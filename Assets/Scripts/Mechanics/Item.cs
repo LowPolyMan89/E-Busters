@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    private DataProvider dataProvider;
     public string ID;
 
     private void Start()
     {
-        dataProvider = DataProvider.Instance;
-        dataProvider.Events.OnInteractiveAction += PickUpItems;
+      //  DataProvider.Instance.Events.OnInteractiveAction += PickUpItems;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -18,16 +16,16 @@ public class Item : MonoBehaviour
         if(other.tag == "Player")
         {
             print(gameObject.name);
-            dataProvider.Player.Inventory.AddNearItemToList(this);
+            DataProvider.Instance.Player.Inventory.AddNearItemToList(this);
         }
     }
 
-    public void PickUpItems()
+    public virtual void PickUpItems()
     {
-        if(dataProvider.Player.Inventory.CheckNearItemInList(this))
+        if(DataProvider.Instance.Player.Inventory.CheckNearItemInList(this))
         {
-            dataProvider.Player.Inventory.AddItemToList(this);
-            dataProvider.Player.Inventory.RemovNearestItem(this);
+            DataProvider.Instance.Player.Inventory.AddItemToList(this);
+            DataProvider.Instance.Player.Inventory.RemovNearestItem(this);
             gameObject.SetActive(false);
         }
     }
@@ -36,13 +34,13 @@ public class Item : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            print(gameObject.name);
-            dataProvider.Player.Inventory.RemovNearestItem(this);
+            // print(gameObject.name);
+            DataProvider.Instance.Player.Inventory.RemovNearestItem(this);
         }
     }
 
     private void OnDestroy()
     {
-        dataProvider.Events.OnInteractiveAction -= PickUpItems;
+       // DataProvider.Instance.Events.OnInteractiveAction -= PickUpItems;
     }
 }

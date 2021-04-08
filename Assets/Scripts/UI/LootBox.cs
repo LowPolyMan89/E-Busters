@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class LootBox : ObjectAction
 {
-   [SerializeField] private Item[] items = new Item[4];
+   [SerializeField] private List<Item> items = new List<Item>(4);
 
-    public Item[] GetItems()
+    public List<Item> GetItems()
     {
         return items;
     }
@@ -22,7 +23,7 @@ public class LootBox : ObjectAction
     }
     public override void Action()
     {
-        if (DataProvider.Instance.ClosesActionObject != this)
+        if (DataProvider.Instance.Player.ClosesActionObject != this)
         {
             return;
         }
@@ -32,7 +33,16 @@ public class LootBox : ObjectAction
             return;
         }
 
-        DataProvider.Instance.BattleUI.OpenLootBoxPanel(items.ToList<Item>(), true);
+        DataProvider.Instance.BattleUI.OpenLootBoxPanel(items, true);
     }
 
+    internal void RemoveItem(Item itemInSlot, int slotId)
+    {
+        items[slotId] = null;
+    }
+    internal void RemoveItem(Item itemInSlot)
+    {
+        if(items.Contains(itemInSlot))
+             items.Remove(itemInSlot);
+    }
 }

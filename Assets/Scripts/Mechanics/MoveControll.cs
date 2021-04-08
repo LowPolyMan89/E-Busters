@@ -55,6 +55,8 @@ public class MoveControll : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             dataProvider.Events.EnteractiveAction();
+            dataProvider.Events.OpenTerminal(dataProvider.Player.ClosesTerminal, dataProvider.Player.ClosesTerminal);
+            dataProvider.Player.Inventory.PickUpItems();
         }
 
         if (Input.GetMouseButton(1) && dataProvider.Player.CurrentWeapon)

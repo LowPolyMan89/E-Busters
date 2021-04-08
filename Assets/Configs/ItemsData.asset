@@ -17,3 +17,7 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 8053379b6b66339479e8b89a6a38a232, type: 3}
     Prefab: {fileID: 7594507924560914180, guid: 3b83f1d2829d0a544932fca5c5400de3,
       type: 3}
+  - ID: AssaultRifle
+    Sprite: {fileID: 21300000, guid: e7e43fbf2305a5b478520eb844ac864f, type: 3}
+    Prefab: {fileID: 7047070155544406714, guid: 552f12271cd1ef34aa122740048022d6,
+      type: 3}

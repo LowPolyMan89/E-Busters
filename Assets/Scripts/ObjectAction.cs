@@ -26,7 +26,7 @@ public class ObjectAction : MonoBehaviour
 
         if (TriggerType == ActionTriggerType.PressE && isActive)
         {
-            dataProvider.ClosesActionObject = this;
+            dataProvider.Player.ClosesActionObject = this;
 
             return;
         }
@@ -43,9 +43,15 @@ public class ObjectAction : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        dataProvider.Player.ClosesActionObject = null;
+
         if (TriggerType == ActionTriggerType.PressE && isActive)
         {
-            dataProvider.ClosesActionObject = null;
+
+            if(ActionType == ActionTypes.LootBoxOpen)
+            {
+                dataProvider.BattleUI.CloseLootBoxPanel();
+            }
 
             return;
         }

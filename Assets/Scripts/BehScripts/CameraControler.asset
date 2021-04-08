@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23f08d2ae4cba14087c1ed36193d82b, type: 3}
+  m_Name: CameraControler
+  m_EditorClassIdentifier: 
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(-371.59375,-412.0293)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(104.018524,316.338074)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(4.89804459,212.244949)"},"ID":2,"Name":"Parallel
+        Complete","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityTransform.SetPosition","NodeData":{"Offset":"(439.330658,226.326614)"},"ID":3,"Name":"Set
+        Position","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Camera","IsShared":true},"SharedVector3position":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"StoredCameraPos","IsShared":true,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityVector3.Operator","NodeData":{"Offset":"(744.4099,225.113617)","WatchedFields":["firstVector3","secondVector3","storeResult"]},"ID":4,"Name":"Operator","Instant":true,"Operationoperation":"Add","SharedVector3firstVector3":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"CameraPos","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedVector3secondVector3":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Offset","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedVector3storeResult":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"StoredCameraPos","IsShared":true,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityTransform.GetPosition","NodeData":{"Offset":"(1146.99438,226.746216)"},"ID":5,"Name":"Get
+        Position","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true},"SharedVector3storeValue":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"CameraPos","IsShared":true,"Vector3mValue":"(0,0,0)"}}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"CameraPos","IsShared":true,"Vector3mValue":"(0,0,0)"},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Offset","IsShared":true,"Vector3mValue":"(0,0,0)"},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"StoredCameraPos","IsShared":true,"Vector3mValue":"(0,0,0)"},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Camera","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true}]}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 1.6.8

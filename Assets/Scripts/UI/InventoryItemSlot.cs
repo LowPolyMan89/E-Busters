@@ -12,11 +12,12 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public int SlotID;
     private DataProvider dataProvider;
     private Vector3 oldPos;
+    public bool isLootBox = false;
+    public LootBox LootBox;
 
     private void Start()
     {
         dataProvider = DataProvider.Instance;
-        oldPos = ItemImage.transform.localPosition;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -24,6 +25,13 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
         if(!ItemInSlot)
         {
             return;
+        }
+
+        if(isLootBox)
+        {
+            LootBox lootBox = (LootBox)dataProvider.Player.ClosesActionObject;
+
+            lootBox.RemoveItem(ItemInSlot, SlotID);
         }
 
         ItemImage.transform.position = eventData.position;
@@ -35,6 +43,11 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
         {
             return;
         }
+        else
+        {
+            oldPos = ItemImage.transform.localPosition;
+        }
+ 
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -44,12 +57,29 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
             return;
         }
 
+        LootBox lootBox = null;
+
         if (eventData.hovered.Count > 0)
         {
+          //  print(eventData.hovered[0]);
 
-            if (eventData.hovered[0].name.Contains("ItemSlot"))
+            bool check = false;
+            int indx = 0;
+            
+
+            foreach (var c in eventData.hovered)
             {
-                InventoryItemSlot targetslot = eventData.hovered[0].GetComponent<InventoryItemSlot>();
+                if(c.gameObject.GetComponent<InventoryItemSlot>())
+                {
+                    check = true;
+                    break;
+                }
+                indx++;
+            }
+
+            if (check)
+            {
+                InventoryItemSlot targetslot = eventData.hovered[indx].GetComponent<InventoryItemSlot>();
 
                 if (targetslot.ItemInSlot)
                 {
@@ -57,6 +87,25 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
                 }
                 else
                 {
+                    if (targetslot.isLootBox)
+                    {
+                        print("Move to LootBox");
+                        dataProvider.Player.Inventory.RemovItemFromList(ItemInSlot);
+
+                        if (dataProvider.Player.ClosesActionObject)
+                        {
+                            lootBox = (LootBox)dataProvider.Player.ClosesActionObject;
+
+                            lootBox.AddItem(ItemInSlot, targetslot.SlotID);
+                        }
+
+                    }
+                    else
+                    {
+                        print("Pick froom LootBox");
+                        dataProvider.Player.Inventory.AddItemToList(ItemInSlot);
+                    }
+
                     print("Change item position:  " + ItemInSlot.name);
 
                     targetslot.ItemInSlot = ItemInSlot;
@@ -64,6 +113,7 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
                     ItemInSlot = null;
                     ItemImage.sprite = dataProvider.BattleUI.emptySprite;
                     ItemImage.transform.localPosition = oldPos;
+
                 }
 
             }
@@ -74,7 +124,18 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
         }
         else
         {
-            dataProvider.Player.Inventory.RemovItemFromList(ItemInSlot);
+            if(isLootBox)
+            {
+                lootBox = (LootBox)dataProvider.Player.ClosesActionObject;
+
+                if(lootBox)
+                    lootBox.RemoveItem(ItemInSlot);
+            }
+            else
+            {
+                dataProvider.Player.Inventory.RemovItemFromList(ItemInSlot);
+            }
+         
             ItemInSlot.gameObject.transform.position = dataProvider.Player.ItemDropPoint.position;
             ItemInSlot.gameObject.SetActive(true);
             ItemInSlot = null;

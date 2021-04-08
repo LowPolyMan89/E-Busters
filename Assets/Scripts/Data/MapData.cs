@@ -98,7 +98,7 @@ public class MapData : MonoBehaviour
             energyStatusGroup[0].SetActive(true);
             energyStatusGroup[1].SetActive(false);
             energyStatusGroup[2].SetActive(false);
-            print("Normal energy status!");
+          //  print("Normal energy status!");
             NormalAllDoors();
 
         }
@@ -108,7 +108,7 @@ public class MapData : MonoBehaviour
             energyStatusGroup[0].SetActive(false);
             energyStatusGroup[1].SetActive(true);
             energyStatusGroup[2].SetActive(false);
-            print("Danger energy status!");
+          //  print("Danger energy status!");
             OpenAllDoors();
         }
         if(power <= 0)
@@ -118,7 +118,7 @@ public class MapData : MonoBehaviour
             energyStatusGroup[0].SetActive(false);
             energyStatusGroup[1].SetActive(false);
             energyStatusGroup[2].SetActive(true);
-            print("Critical energy status! Start recharging!");
+         //   print("Critical energy status! Start recharging!");
         }
     }
 

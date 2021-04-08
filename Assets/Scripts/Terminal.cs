@@ -9,13 +9,14 @@ public class Terminal : MonoBehaviour
     public Animator animator;
     public bool isActive = true;
     [SerializeField] private Renderer material;
+    [SerializeField] private bool isOpen = false;
 
     private void Start()
     {
         dataProvider = DataProvider.Instance;
         CheckActive();
         if(dataProvider)
-            dataProvider.Events.OnInteractiveAction += Open;
+            dataProvider.Events.OnOpenTerminalEvent += Open;
 
         StartCoroutine(SlowUpdate());
     }
@@ -27,10 +28,21 @@ public class Terminal : MonoBehaviour
         StartCoroutine(SlowUpdate());
     }
 
-    public void Open()
+    public Terminal Open(Terminal terminal)
     {
+        if(terminal != this)
+        {
+            return null;
+        }
+
         if(isActive)
+        {
             OpenTerminalPanel(this);
+            return this;
+        }
+
+        return null;
+            
     }
 
     private void CheckActive()
@@ -57,7 +69,22 @@ public class Terminal : MonoBehaviour
 
     private void OpenTerminalPanel(Terminal terminal)
     {
-        dataProvider.BattleUI.OpenTerminalWindow(terminal);
+        if(terminal != this)
+        {
+            return;
+        }
+
+        if(!isOpen)
+        {
+            dataProvider.BattleUI.OpenTerminalWindow(terminal);
+        }
+        else
+        {
+            dataProvider.BattleUI.CloseTerminalWindow(terminal);
+        }
+
+        isOpen = !isOpen;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -68,7 +95,7 @@ public class Terminal : MonoBehaviour
             {
                 return;
             }
-            dataProvider.ClosesTerminal = this;
+            dataProvider.Player.ClosesTerminal = this;
             if(animator)
             {
                 animator.SetBool("Open", true);
@@ -85,8 +112,8 @@ public class Terminal : MonoBehaviour
                 return;
             }
 
-            dataProvider.ClosesTerminal = null;
-            dataProvider.BattleUI.OpenTerminalWindow(this);
+            dataProvider.Player.ClosesTerminal = null;
+            dataProvider.BattleUI.CloseTerminalWindow(this);
             if(animator)
             {
                 animator.SetBool("Open", false);

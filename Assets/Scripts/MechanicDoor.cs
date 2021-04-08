@@ -20,7 +20,7 @@ public class MechanicDoor : ObjectAction
     }
     public override void Action()
     {
-        if(DataProvider.Instance.ClosesActionObject != this)
+        if(DataProvider.Instance.Player.ClosesActionObject != this)
         {
             return;
         }

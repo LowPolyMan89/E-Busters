@@ -14,6 +14,16 @@ public class Inventory : MonoBehaviour
         dataProvider = DataProvider.Instance;
     }
 
+    public void PickUpItems()
+    {
+        if(NearestItem.Count > 0)
+        {
+            NearestItem[0].gameObject.SetActive(false);
+            AddItemToList(NearestItem[0]);
+            RemovNearestItem(NearestItem[0]);        
+        }
+    }
+
     public void AddItemToList(Item item)
     {
         if (items.Contains(item))

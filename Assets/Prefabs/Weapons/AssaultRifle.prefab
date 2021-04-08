@@ -9713,6 +9713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfd88e7d972a1948be80bcd4bbfb021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: AssaultRifle
   reloadTime: 0
   ammoCount: 0
   ammoStorage: 0

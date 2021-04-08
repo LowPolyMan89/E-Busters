@@ -14,6 +14,7 @@ public class EventSystem : MonoBehaviour
     public event Func<float, float> OnMapPowerChange;
     public event Func<float, Player> OnPlayerHpChange;
     public event Func<EnemySpawner, EnemySpawner> OnSpawnEnemyEvent;
+    public event Func<Terminal, Terminal> OnOpenTerminalEvent;
     public event Action OnInteractiveAction;
     public event Func<Item, Item> OnAddItemToSlot;
     public event Func<Weapon, Weapon> OnAddWeaponToSlot;
@@ -30,11 +31,21 @@ public class EventSystem : MonoBehaviour
         return spawner;
     }
 
+
     public Item AddItemToSlot(Item outValu, Item inValue)
     {
         if (OnAddItemToSlot != null)
         {
             OnAddItemToSlot(inValue);
+        }
+
+        return inValue;
+    }
+    public Terminal OpenTerminal(Terminal outValu, Terminal inValue)
+    {
+        if (OnOpenTerminalEvent != null)
+        {
+            OnOpenTerminalEvent(inValue);
         }
 
         return inValue;

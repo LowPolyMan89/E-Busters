@@ -13,9 +13,8 @@ public class DataProvider : MonoBehaviour
     public Player Player;
     public EnemyData EnemyData;
     public LevelConfig LevelConfig;
-    public Terminal ClosesTerminal;
-    public ObjectAction ClosesActionObject;
     public BattleUI BattleUI;
+
 
     private void Awake()
     {

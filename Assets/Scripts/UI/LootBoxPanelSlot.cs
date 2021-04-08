@@ -7,4 +7,9 @@ public class LootBoxPanelSlot : MonoBehaviour
 {
     public Item item;
     public Image image;
+
+    private void Start()
+    {
+        image.sprite = DataProvider.Instance.BattleUI.emptySprite;
+    }
 }

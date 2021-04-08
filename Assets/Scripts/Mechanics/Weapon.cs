@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class Weapon : Item
 {
     [SerializeField] private float reloadTime;
     [SerializeField] private float ammoCount;
@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
     public bool isReload = false;
     [SerializeField] private bool isGrownded;
 
-    private DataProvider dataProvider;
+    public DataProvider dataProvider;
 
     [HideInInspector] public WeaponData weaponData;
 
@@ -30,27 +30,14 @@ public class Weapon : MonoBehaviour
         ammoCount = weaponData.AmmoCount;
         ammoStorage = weaponData.AmmoStorage;
 
-        if(weaponStage == WeaponStage.Player)
-            dataProvider.Player.CurrentWeapon = this;   
+        //if(weaponStage == WeaponStage.Player)
+        //    dataProvider.Player.CurrentWeapon = this;   
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void PickUpItems()
     {
-        if (other.tag == "Player")
-        {
-            dataProvider = DataProvider.Instance;
-            print(gameObject.name);
-            dataProvider.Player.AddClosesWeapon(this);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            dataProvider = DataProvider.Instance;
-            dataProvider.Player.AddClosesWeapon(null);
-        }
+        base.PickUpItems();
     }
 
     public void StartVfx()
