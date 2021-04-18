@@ -19,6 +19,7 @@ public class BattleUI : MonoBehaviour
     public DoorDataPanel DoorDataPanelPrefab;
     public Sprite emptySprite;
     [SerializeField] private Transform DoorDataPanelTransform;
+    [SerializeField] private InventoryItemSlot activeSlot;
     [SerializeField] private List<InventoryItemSlot> inventoryItemSlots = new List<InventoryItemSlot>();
     [SerializeField] private List<InventoryItemSlot> lootBoxItemSlots = new List<InventoryItemSlot>();
     [SerializeField] private Transform canvas;
@@ -32,6 +33,14 @@ public class BattleUI : MonoBehaviour
         dataProvider.Events.OnAddItemToSlot += AddItemToSlot;
         Invoke("UpdateUI", 0.5f);
     }
+
+    public void RemoveActiveSlotItem()
+    {
+
+        activeSlot.ItemInSlot = null;
+        activeSlot.ItemImage.sprite = emptySprite;
+
+    } 
 
     private void Update()
     {

@@ -14,6 +14,32 @@ public class Inventory : MonoBehaviour
         dataProvider = DataProvider.Instance;
     }
 
+    public void EquipItem(Item item)
+    {
+        switch(item.Type)
+        {
+            case Item.ItemType.Weapon:
+                dataProvider.Player.AddWeaponToPlayer((Weapon)item);
+                break;
+            case Item.ItemType.Usable:
+                dataProvider.Player.EquipItemToPlyaer(item);
+                break;
+        }
+    }
+
+    public void UnEquipItem(Item item)
+    {
+        switch (item.Type)
+        {
+            case Item.ItemType.Weapon:
+                dataProvider.Player.RemovePlayerWeapon((Weapon)item);
+                break;
+            case Item.ItemType.Usable:
+                dataProvider.Player.RemoveItemFromPlyaer(item);
+                break;
+        }
+    }
+
     public void PickUpItems()
     {
         if(NearestItem.Count > 0)

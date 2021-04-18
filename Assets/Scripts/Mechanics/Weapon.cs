@@ -13,6 +13,7 @@ public class Weapon : Item
     public ParticleSystem BulletVfx;
     public bool isReload = false;
     [SerializeField] private bool isGrownded;
+    public Transform FirePoint;
 
     public DataProvider dataProvider;
 

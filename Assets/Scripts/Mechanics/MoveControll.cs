@@ -22,6 +22,9 @@ public class MoveControll : MonoBehaviour
     private float speed = 0;
     [SerializeField] private NavMeshAgent agent;
     AnimationController animationController;
+    [SerializeField] private float positionYOffset;
+
+    private Vector3 hitP;
 
     private float noizeAddSprintTime = 0f;
 
@@ -42,7 +45,63 @@ public class MoveControll : MonoBehaviour
         animationController.InitController(dataProvider.Player.Animator);
     }
 
-    private void Update()
+    private void AimTarget()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            animationController.SetAim("AimingRifle", true);
+
+            RaycastHit hit;
+            if (Physics.Raycast(dataProvider.Player.LookPoint.position, dataProvider.Player.LookPoint.forward * 20f, out hit, 100f, layerMask))
+            {
+                float dist = Vector3.Distance(hit.point, dataProvider.Player.WeaponSlot.position);
+                if (dist > 2f)
+                {
+                    dataProvider.Player.WeaponSlot.rotation = Quaternion.LookRotation((hit.point - dataProvider.Player.WeaponSlot.position) * dist);
+
+                }
+                else
+                {
+                    dataProvider.Player.WeaponSlot.rotation = Quaternion.LookRotation(dataProvider.Player.LookPoint.forward * 20f);
+                }
+                hitP = hit.point;
+            }
+            else
+            {
+                dataProvider.Player.WeaponSlot.rotation = Quaternion.LookRotation(dataProvider.Player.LookPoint.forward * 20f);
+
+            }
+
+
+            if (Input.GetMouseButton(0))
+            {
+                dataProvider.Player.CurrentWeapon.Shoot();
+            }
+        }
+        else
+        {
+            animationController.SetAim("AimingRifle", false);
+        }
+    }
+
+    private void AimItem()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            animationController.SetAim("AimingRifle", true);
+
+            if (Input.GetMouseButton(0))
+            {
+                dataProvider.Player.ItemInActiveSlot.Use();
+            }
+        }
+        else
+        {
+            animationController.SetAim("AimingRifle", false);
+        }
+    }
+
+    private void KeyWord()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -58,27 +117,10 @@ public class MoveControll : MonoBehaviour
             dataProvider.Events.OpenTerminal(dataProvider.Player.ClosesTerminal, dataProvider.Player.ClosesTerminal);
             dataProvider.Player.Inventory.PickUpItems();
         }
+    }
 
-        if (Input.GetMouseButton(1) && dataProvider.Player.CurrentWeapon)
-        {
-            animationController.SetAim("AimingRifle", true);
-
-            if (Input.GetMouseButton(0))
-            {
-                dataProvider.Player.CurrentWeapon.Shoot();
-            }
-        }
-        else
-        {
-            animationController.SetAim("AimingRifle", false);
-        }
-
-        if (dataProvider.BattleUI.TerminalPanel.isActiveAndEnabled)
-        {
-            return;
-        }
-
-
+    private void PlayerRotation()
+    {
         var camera = Camera.main;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -86,22 +128,57 @@ public class MoveControll : MonoBehaviour
         var playerPosition = playerTransform.position;
 
         var point = camera.ScreenToWorldPoint(Input.mousePosition);
-        var height = playerPosition.y - point.y;
+        var height = playerPosition.y + positionYOffset - point.y;
         point += ray.direction.normalized * height / Mathf.Cos(Vector3.Angle(ray.direction, playerTransform.up) * Mathf.Deg2Rad);
         point = new Vector3(point.x, playerTransform.position.y, point.z);
 
         EulerAngles = Quaternion.LookRotation(point - playerTransform.position).eulerAngles;
-            //Vector3.MoveTowards(EulerAngles, point, distanceDelta * Time.deltaTime);
+        //Vector3.MoveTowards(EulerAngles, point, distanceDelta * Time.deltaTime);
 
         if (Vector3.Distance(point, playerPosition) > deadZoneRadius)
         {
             // playerTransform.LookAt(EulerAngles);
             playerTransform.localRotation = Quaternion.Lerp(playerTransform.localRotation, Quaternion.Euler(EulerAngles), distanceDelta * Time.deltaTime);
-           // playerTransform.localEulerAngles = new Vector3(0f, _player.transform.localRotation.eulerAngles.y, 0f);
+            // playerTransform.localEulerAngles = new Vector3(0f, _player.transform.localRotation.eulerAngles.y, 0f);
         }
         _cameraTransform.position = new Vector3(playerPosition.x + _cameraOffset.x, _cameraOffset.y, playerPosition.z + _cameraOffset.z);
+    }
+
+    private void Update()
+    {
+
+        KeyWord();
 
         if(dataProvider.Player.CurrentWeapon)
+            AimTarget();
+        else if(dataProvider.Player.ItemInActiveSlot)
+             AimItem();
+        else
+        {
+            animationController.SetAim("AimingRifle", false);
+        }
+
+        PlayerRotation();
+
+        if (dataProvider.BattleUI.TerminalPanel.isActiveAndEnabled)
+        {
+            return;
+        }
+
+        dataProvider.Player.WeaponSlot.Rotate(dataProvider.Player.WeaponSlot.forward, 0f);
+
+        
+
+        if(dataProvider.Player.CurrentWeapon)
+        {
+            animationController.PickUpItemAnim("PickUpRifle", "Rifle", true);
+        }
+        else
+        {
+            animationController.PickUpItemAnim("PickUpRifle", "Rifle", false);
+        }
+
+        if (dataProvider.Player.ItemInActiveSlot)
         {
             animationController.PickUpItemAnim("PickUpRifle", "Rifle", true);
         }
@@ -113,9 +190,13 @@ public class MoveControll : MonoBehaviour
 
     private void SwitchWeapon()
     {
-
+       
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(hitP, 0.2f);
+    }
 
     private void FixedUpdate()
     {
@@ -134,9 +215,13 @@ public class MoveControll : MonoBehaviour
                 dataProvider.Events.NoizeChangeEvent(player.PlayerStats.NoizePerSprint * 0.01f, player.PlayerStats.NoizePerSprint * 0.01f);
                 animationController.Move("Run", "Run", true);
             }
-            else if(Input.GetMouseButton(1) && !Input.GetKey(KeyCode.LeftShift))
+            else if(Input.GetMouseButton(1))
             {
-                localspeed = player.PlayerStats.AimSpeed;
+                if(player.CurrentWeapon)
+                     localspeed = player.PlayerStats.AimSpeed;
+                else if(player.ItemInActiveSlot)
+                    localspeed = 0;
+
                 animationController.Move("Run", "Run", false);
             }
             else

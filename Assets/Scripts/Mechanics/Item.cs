@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    public enum ItemType
+    {
+        Weapon, Usable
+    }
+
+    public ItemType Type;
+    public bool Equiped = false;
     public string ID;
+
+    public virtual void Use()
+    {
+
+    }
 
     private void Start()
     {
@@ -13,6 +25,11 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(Equiped)
+        {
+            return;
+        }
+
         if(other.tag == "Player")
         {
             print(gameObject.name);
@@ -32,6 +49,11 @@ public class Item : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (Equiped)
+        {
+            return;
+        }
+
         if (other.tag == "Player")
         {
             // print(gameObject.name);

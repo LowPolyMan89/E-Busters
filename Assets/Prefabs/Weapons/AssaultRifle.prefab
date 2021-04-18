@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 338751669335443610}
   - component: {fileID: 643845489267496576}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 7752517393641527823}
   - component: {fileID: 1222391809675599470}
   - component: {fileID: 32948024}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4873,7 +4873,7 @@ GameObject:
   - component: {fileID: 1601463605386585502}
   - component: {fileID: 6682038033301439159}
   - component: {fileID: 3061276177335003040}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9625,7 +9625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7062012368268808535}
   - component: {fileID: 7761168602509101457}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: vfx_AssaultRifleShoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9640,7 +9640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6510137052390640575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.056, y: 0.101, z: 0.539}
+  m_LocalPosition: {x: 0, y: 0, z: 0.6882}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1278617627803270592}
@@ -9678,7 +9678,7 @@ GameObject:
   - component: {fileID: 515566365714947495}
   - component: {fileID: 8365753557406028528}
   - component: {fileID: 5954044852506191033}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: AssaultRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9693,7 +9693,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7047070155544406714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -61.054787, y: -0.29, z: -11.230865}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7062012368268808535}
@@ -9713,6 +9713,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfd88e7d972a1948be80bcd4bbfb021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
+  Equiped: 0
   ID: AssaultRifle
   reloadTime: 0
   ammoCount: 0
@@ -9723,6 +9725,8 @@ MonoBehaviour:
   BulletVfx: {fileID: 7752517393641527823}
   isReload: 0
   isGrownded: 0
+  FirePoint: {fileID: 7062012368268808535}
+  dataProvider: {fileID: 0}
   weaponData: {fileID: 0}
   Data: {fileID: 11400000, guid: 14523045b154bb4439343b1a3f8ec6f1, type: 2}
   angle: 0
@@ -9775,10 +9779,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7047070155544406705}
     m_Modifications:
+    - target: {fileID: 3410458839468321339, guid: 1008d181cf2c5444aab1df2a7737c7f7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5178442458471015328, guid: 1008d181cf2c5444aab1df2a7737c7f7,
         type: 3}
       propertyPath: m_Name
       value: AssaultRifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178442458471015328, guid: 1008d181cf2c5444aab1df2a7737c7f7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5518692221786224922, guid: 1008d181cf2c5444aab1df2a7737c7f7,
         type: 3}
@@ -9788,7 +9802,7 @@ PrefabInstance:
     - target: {fileID: 5518692221786224922, guid: 1008d181cf2c5444aab1df2a7737c7f7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.049568176
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5518692221786224922, guid: 1008d181cf2c5444aab1df2a7737c7f7,
         type: 3}
@@ -9798,7 +9812,7 @@ PrefabInstance:
     - target: {fileID: 5518692221786224922, guid: 1008d181cf2c5444aab1df2a7737c7f7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.113
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5518692221786224922, guid: 1008d181cf2c5444aab1df2a7737c7f7,
         type: 3}

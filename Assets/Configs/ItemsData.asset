@@ -21,3 +21,7 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: e7e43fbf2305a5b478520eb844ac864f, type: 3}
     Prefab: {fileID: 7047070155544406714, guid: 552f12271cd1ef34aa122740048022d6,
       type: 3}
+  - ID: _medkit
+    Sprite: {fileID: 21300000, guid: 0343f3a7ed9916f49b4a37b40e23db37, type: 3}
+    Prefab: {fileID: 7047070155544406714, guid: 552f12271cd1ef34aa122740048022d6,
+      type: 3}

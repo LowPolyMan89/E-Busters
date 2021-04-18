@@ -77,53 +77,70 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
                 indx++;
             }
 
+            Debug.Log("Ui invebtory check ststus: " + check);
+
             if (check)
             {
                 InventoryItemSlot targetslot = eventData.hovered[indx].GetComponent<InventoryItemSlot>();
 
+                if (ItemInSlot.Equiped && !targetslot.ItemInSlot && !targetslot.isLootBox)
+                {
+                    Inventory inventory = dataProvider.Player.Inventory;
+                    ItemInSlot.Equiped = false;
+                    inventory.UnEquipItem(ItemInSlot);
+                }
+
                 if (targetslot.ItemInSlot)
                 {
-
+                    ItemImage.transform.localPosition = oldPos;
                 }
                 else
                 {
-                    if (targetslot.isLootBox)
+
+                    if (!targetslot.isLootBox)
                     {
-                        print("Move to LootBox");
-                        dataProvider.Player.Inventory.RemovItemFromList(ItemInSlot);
+                        ItemInSlot.gameObject.SetActive(false);
 
-                        if (dataProvider.Player.ClosesActionObject)
+                        dataProvider.Player.Inventory.AddItemToList(ItemInSlot);
+
+
+                        print("Change item position:  " + ItemInSlot.name);
+
+
+                        if (targetslot.SlotID == 10)
                         {
-                            lootBox = (LootBox)dataProvider.Player.ClosesActionObject;
-
-                            lootBox.AddItem(ItemInSlot, targetslot.SlotID);
+                            Inventory inventory = dataProvider.Player.Inventory;
+                            ItemInSlot.Equiped = true;
+                            inventory.EquipItem(ItemInSlot);
                         }
 
+
+                        targetslot.ItemInSlot = ItemInSlot;
+                        targetslot.ItemImage.sprite = ItemImage.sprite;
+                        ItemInSlot = null;
+                        ItemImage.sprite = dataProvider.BattleUI.emptySprite;
+                        ItemImage.transform.localPosition = oldPos;
                     }
                     else
                     {
-                        print("Pick froom LootBox");
-                        dataProvider.Player.Inventory.AddItemToList(ItemInSlot);
+                        ItemImage.transform.localPosition = oldPos;
                     }
 
-                    print("Change item position:  " + ItemInSlot.name);
-
-                    targetslot.ItemInSlot = ItemInSlot;
-                    targetslot.ItemImage.sprite = ItemImage.sprite;
-                    ItemInSlot = null;
-                    ItemImage.sprite = dataProvider.BattleUI.emptySprite;
-                    ItemImage.transform.localPosition = oldPos;
-
                 }
+            
 
             }
             else
             {
+                Debug.Log("DropItem_2");
                 ItemImage.transform.localPosition = oldPos;
             }
         }
         else
         {
+
+            Debug.Log("DropItem_3");
+
             if(isLootBox)
             {
                 lootBox = (LootBox)dataProvider.Player.ClosesActionObject;
@@ -137,7 +154,12 @@ public class InventoryItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler,
             }
          
             ItemInSlot.gameObject.transform.position = dataProvider.Player.ItemDropPoint.position;
+            ItemInSlot.transform.SetParent(null);
             ItemInSlot.gameObject.SetActive(true);
+            Inventory inventory = dataProvider.Player.Inventory;
+            ItemInSlot.Equiped = false;
+            inventory.UnEquipItem(ItemInSlot);
+
             ItemInSlot = null;
             ItemImage.sprite = dataProvider.BattleUI.emptySprite;
             ItemImage.transform.localPosition = oldPos;

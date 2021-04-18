@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private float playerHP = 100f;
     [SerializeField] private Item itemInActiveSlot;
+    [SerializeField] private Transform lookPoint;
 
     public Terminal ClosesTerminal;
     public ObjectAction ClosesActionObject;
@@ -23,6 +24,8 @@ public class Player : MonoBehaviour
     public Animator Animator { get => animator; }
     public float PlayerHP { get => playerHP; }
     public Item ItemInActiveSlot { get => itemInActiveSlot; set => itemInActiveSlot = value; }
+    public Transform WeaponSlot { get => weaponSlot; set => weaponSlot = value; }
+    public Transform LookPoint { get => lookPoint; set => lookPoint = value; }
 
     [SerializeField] private Inventory inventory;
 
@@ -36,21 +39,58 @@ public class Player : MonoBehaviour
     public Player SetPlayerHP(float value)
     {
         playerHP += value;
+        if (playerHP > 100) playerHP = 100;
         return this;
     }
 
+    public Item EquipItemToPlyaer(Item item)
+    {
+        item.gameObject.SetActive(true);
+        DataProvider.Instance.Player.itemInActiveSlot = item;
+        item.gameObject.transform.SetParent(weaponSlot);
+        item.gameObject.transform.localPosition = Vector3.zero;
+        item.transform.rotation = weaponSlot.rotation;
+        item.transform.localEulerAngles = new Vector3(item.transform.rotation.x, item.transform.rotation.y, 0);
+        item.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        item.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+        return item;
+    }
+
+    public Item RemoveItemFromPlyaer(Item item)
+    {
+        item.gameObject.SetActive(true);
+        DataProvider.Instance.Player.itemInActiveSlot = null;
+        item.gameObject.transform.SetParent(null);
+        item.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        item.gameObject.GetComponent<BoxCollider>().enabled = true;
+
+        return item;
+    }
 
     public Weapon AddWeaponToPlayer(Weapon weapon)
     {
-
+        weapon.gameObject.SetActive(true);
+        DataProvider.Instance.Player.CurrentWeapon = weapon;
         weapon.gameObject.transform.SetParent(weaponSlot);
         weapon.gameObject.transform.localPosition = Vector3.zero;
         weapon.transform.rotation = weaponSlot.rotation;
-        weapon.transform.localEulerAngles = new Vector3(weapon.transform.rotation.x, weapon.transform.rotation.y, 90);
+        weapon.transform.localEulerAngles = new Vector3(weapon.transform.rotation.x, weapon.transform.rotation.y, 0);
         weapon.CreateWeapon();
         weapon.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         weapon.gameObject.GetComponent<BoxCollider>().enabled = false;
         isWeaponReady = true;
+        return weapon;
+    }
+
+    public Weapon RemovePlayerWeapon(Weapon weapon)
+    {
+        weapon.gameObject.SetActive(true);
+        DataProvider.Instance.Player.CurrentWeapon = null;
+        weapon.gameObject.transform.SetParent(null);
+        weapon.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        weapon.gameObject.GetComponent<BoxCollider>().enabled = true;
+        isWeaponReady = false;
         return weapon;
     }
 
