@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [SerializeField] private List<Collider> colliders = new List<Collider>();
+
+    public void SwitchColliders(bool value)
+    {
+        foreach (var v in colliders)
+        {
+            v.enabled = value;
+        }
+    }
     public enum ItemType
     {
         Weapon, Usable

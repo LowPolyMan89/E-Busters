@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     public Terminal ClosesTerminal;
     public ObjectAction ClosesActionObject;
-
+    public string PlayerAreaName = "";
     public Weapon CurrentWeapon;
     public bool isWeaponReady = false;
     public PlayerStats PlayerStats { get => playerStats; }
@@ -52,8 +52,8 @@ public class Player : MonoBehaviour
         item.transform.rotation = weaponSlot.rotation;
         item.transform.localEulerAngles = new Vector3(item.transform.rotation.x, item.transform.rotation.y, 0);
         item.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        item.gameObject.GetComponent<BoxCollider>().enabled = false;
 
+        item.SwitchColliders(false);
         return item;
     }
 
@@ -63,8 +63,8 @@ public class Player : MonoBehaviour
         DataProvider.Instance.Player.itemInActiveSlot = null;
         item.gameObject.transform.SetParent(null);
         item.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        item.gameObject.GetComponent<BoxCollider>().enabled = true;
 
+        item.SwitchColliders(true);
         return item;
     }
 
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
         weapon.transform.localEulerAngles = new Vector3(weapon.transform.rotation.x, weapon.transform.rotation.y, 0);
         weapon.CreateWeapon();
         weapon.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        weapon.gameObject.GetComponent<BoxCollider>().enabled = false;
+        weapon.SwitchColliders(false);
         isWeaponReady = true;
         return weapon;
     }
@@ -89,9 +89,14 @@ public class Player : MonoBehaviour
         DataProvider.Instance.Player.CurrentWeapon = null;
         weapon.gameObject.transform.SetParent(null);
         weapon.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        weapon.gameObject.GetComponent<BoxCollider>().enabled = true;
+        weapon.SwitchColliders(true);
         isWeaponReady = false;
         return weapon;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        PlayerAreaName = other.name;
     }
 
     private void OnDestroy()

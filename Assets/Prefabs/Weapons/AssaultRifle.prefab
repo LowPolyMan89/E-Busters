@@ -9713,6 +9713,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfd88e7d972a1948be80bcd4bbfb021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colliders:
+  - {fileID: 8365753557406028528}
+  - {fileID: 5954044852506191033}
   Type: 0
   Equiped: 0
   ID: AssaultRifle

@@ -108,6 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0833fd638a68624cb9abd58c291aae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colliders:
+  - {fileID: 7594507924560914177}
+  - {fileID: 7594507924560914205}
   Type: 1
   Equiped: 0
   ID: _capitanKey

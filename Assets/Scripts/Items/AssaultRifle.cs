@@ -7,6 +7,7 @@ public class AssaultRifle : Weapon
     [SerializeField] private WeaponData Data;
     private bool isFireRate = false;
     [SerializeField] private float angle;
+
     private void Start()
     {
         base.weaponData = Data;
@@ -14,6 +15,8 @@ public class AssaultRifle : Weapon
         CreateBullet();
 
     }
+
+
 
     public override void PickUpItems()
     {

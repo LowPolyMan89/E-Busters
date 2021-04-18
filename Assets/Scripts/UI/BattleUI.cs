@@ -25,6 +25,8 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Transform canvas;
     [SerializeField] private List<ItemInfoPanel> itemInfoPanels = new List<ItemInfoPanel>();
     [SerializeField] private Vector3 itemInfoPanelOffset;
+    [SerializeField] private Transform questPanel;
+    [SerializeField] private GameObject questPrefab;
     private float reloadTime = 0f;
     private void Start()
     {
@@ -32,6 +34,15 @@ public class BattleUI : MonoBehaviour
         dataProvider.Events.OnUiUpdate += UpdateUI;
         dataProvider.Events.OnAddItemToSlot += AddItemToSlot;
         Invoke("UpdateUI", 0.5f);
+    }
+
+    public GameObject CreateQuestPanel(string name, string description)
+    {
+        GameObject quest = Instantiate(questPrefab);
+        quest.transform.SetParent(questPanel);
+        QuestUI questUI = quest.GetComponent<QuestUI>();
+        questUI.Name.text = description;
+        return quest;
     }
 
     public void RemoveActiveSlotItem()

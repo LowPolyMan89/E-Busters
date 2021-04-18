@@ -14,6 +14,8 @@ public class DataProvider : MonoBehaviour
     public EnemyData EnemyData;
     public LevelConfig LevelConfig;
     public BattleUI BattleUI;
+    public QuestSystem QuestSystem;
+    public QuestData QuestData;
 
 
     private void Awake()
@@ -21,6 +23,7 @@ public class DataProvider : MonoBehaviour
         Player = GameObject.FindObjectOfType<Player>();
         EnemySpawners.AddRange(GameObject.FindObjectsOfType<EnemySpawner>());
         BattleUI = GameObject.FindObjectOfType<BattleUI>();
+        QuestSystem = GameObject.FindObjectOfType<QuestSystem>();
         if (instance == null)
         {
             instance = this;
